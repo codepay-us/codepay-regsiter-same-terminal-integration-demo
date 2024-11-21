@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".trans.SaleActivity">
+
+    <EditText
+        android:id="@+id/et_creditor_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Creditor name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_contract_reference_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Contract reference No."
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_account_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Cheque/Savings Account No."
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_debtor_identification_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Debtor identification No."
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_installment_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Installment amount"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_maximum_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Maximum amount"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_first_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="First collection date: YYYY/MM/DD"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_monthly_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Monthly collection date: DD"
+        android:inputType="number" />
+
+
+    <EditText
+        android:id="@+id/et_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/consume_input_note"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_start_trans"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1.2"
+            android:text="OK" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#3f30" />
+
+</LinearLayout>

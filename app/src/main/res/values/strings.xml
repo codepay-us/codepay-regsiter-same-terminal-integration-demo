@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">CodePayInvokeDemo</string>
+
+
+    <!--主界面-->
+    <string name="main_consume">Sale</string>
+    <string name="main_void">Void</string>
+    <string name="main_refund">Refund</string>
+    <string name="main_query">Query</string>
+    <string name="main_reprint">Reprint</string>
+    <string name="main_preauth">Authorization</string>
+    <string name="main_preauth_complete">Completion</string>
+    <string name="settlement">Settlement</string>
+    <string name="query">Query</string>
+    <string name="reprint">Reprint</string>
+    <string name="main_tip_adjustment">Tip Adjustment</string>
+    <string name="main_batch_close">Batch Close</string>
+    <string name="test">Start Test</string>
+    <string name="get">Get</string>
+    <string name="main_version">Version：1.1.0</string>
+
+    <!--消费-->
+    <string name="consume_input_amount">Input consume amount</string>
+    <string name="consume_input_tip">Input tip amount</string>
+    <string name="consume_input_cash">Input cash amount</string>
+    <string name="consume_input_note">Input a comment (optional)</string>
+    <string name="consume_success">Consume success</string>
+    <string name="consume_fail">Consume fail</string>
+    <string name="consume_bank_card">Bankcard</string>
+    <string name="consume_unionpay_qr_code">Unionpay QR Code</string>
+    <string name="start_trans">Start third trans process</string>
+    <string name="operator">Input operator</string>
+
+    <!--CashBack-->
+    <string name="consume_input_cash_amount">Input cash amount</string>
+
+    <!--撤销-->
+    <string name="void_ori_business_order_no">Input Ori business order number</string>
+
+    <!--退款-->
+    <string name="refund_input_amount">Input refund amount</string>
+    <string name="refund_input_trans_type">Input Trans. type(2-Refund, 3-Void)</string>
+    <string name="refund_input_third_no">Input third No.</string>
+    <string name="refund_bank_card_info">The following is the bank card information</string>
+    <string name="refund_input_original_voucher_no">Input original STAN</string>
+    <string name="refund_input_original_batch_no">Input original batch No.</string>
+    <string name="refund_input_original_refer_no">Input original RRN</string>
+    <string name="refund_input_original_business_order_no">Input original business order No.</string>
+    <string name="refund_original_date">Original date,format：yyyyMMdd</string>
+    <string name="refund_success">Refund success</string>
+    <string name="void_success">Void success</string>
+    <string name="refund_fail">Refund fail</string>
+    <string name="void_fail">Void fail</string>
+
+
+    <!--预授权-->
+    <string name="preauth_input_amt">Input preAuth complete amount</string>
+    <string name="preauth_input_refno">Input Auth number</string>
+    <string name="preauth_input_preauth_thirdno">Input third BusinessOrderNo</string>
+    <string name="input_invoice_no">Input invoice No</string>
+
+
+    <!--查询-->
+    <string name="query_success">Query success</string>
+    <string name="query_fail">Query fail</string>
+
+    <!--重打印-->
+    <string name="reprint_input_refer_no">Input Refer No.</string>
+    <string name="reprint_success">Reprint success</string>
+    <string name="reprint_fail">Reprint fail</string>
+    <string name="balance_inquiry_success">Balance Inquiry Success</string>
+    <string name="balance_inquiry_fail">Balance Inquiry Fail</string>
+    <string name="main_balance_inquiry">Balance Inquiry</string>
+    <string name="main_cash_back">Sale with Cash Back</string>
+    <string name="main_cash_advance">Cash Advance</string>
+
+    <!--VPN-->
+    <string name="vpn_open">打开VPN</string>
+
+
+    <!--print-->
+    <string name="print">Print</string>
+
+
+    <string name="input_amount">Input transaction amount</string>
+    <string name="input_auth_code">Input Auth code</string>
+    <string name="accessibility_service_description">accessibility_service_config</string>
+    <string name="debiCheck">DebiCheck</string>
+</resources>

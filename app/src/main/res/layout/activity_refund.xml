@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_origin_business_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_input_original_business_order_no"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_amount_refund"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="@string/refund_input_amount"
+        android:inputType="number" />
+    <EditText
+        android:id="@+id/et_tip_amount_refund"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890."
+        android:hint="Input refund tip amount"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_order_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_input_third_no"
+        android:inputType="number"
+        android:visibility="gone" />
+
+    <!--银行卡信息-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/refund_bank_card_info"
+        android:textColor="#f30"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_card_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入原交易卡号"
+        android:inputType="number"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_voucher_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_input_original_voucher_no"
+        android:inputType="number"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_batch_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_input_original_batch_no"
+        android:inputType="number"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_ori_refer_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_input_original_refer_no"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/cb_reference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="no reference" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/refund_original_date"
+        android:onClick="onClick"
+        android:padding="3dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:visibility="gone" />
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp">-->
+<!--    <CheckBox-->
+<!--        android:id="@+id/cb_signature"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="screen signature"-->
+<!--        android:checked="false" />-->
+
+<!--&lt;!&ndash;    <View&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="0dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <CheckBox&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/support_print"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:checked="true"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="@string/print" />&ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Print:"
+                android:textColor="#000000" />
+
+            <RadioButton
+                android:id="@+id/option_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="No print" />
+
+            <RadioButton
+                android:id="@+id/option_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Merchant" />
+
+            <RadioButton
+                android:id="@+id/option_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CardHolder" />
+
+            <RadioButton
+                android:id="@+id/option_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/btn_refund_bankcard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/main_refund" />
+
+        <Button
+            android:id="@+id/btn_refund_bankcard2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/main_refund" />
+<!--        <Button-->
+<!--            android:id="@+id/btn_refund_mobile"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Mobile"-->
+<!--            android:visibility="visible" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_refund_cash"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Cash"-->
+<!--            android:visibility="visible" />-->
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_result_refund"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#3f30" />
+
+</LinearLayout>

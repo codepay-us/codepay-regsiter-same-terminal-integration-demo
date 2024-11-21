@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.invoke">
+
+    <queries>
+        <package android:name="com.codepay.register" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.InvokeDemo">
+
+        <activity
+            android:name=".trans.SaleWithCashbackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".trans.BalanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".trans.SaleActivity" />
+        <activity android:name=".trans.VoidActivity" />
+        <activity android:name=".trans.RefundActivity" />
+        <activity android:name=".trans.AuthorizationActivity" />
+        <activity android:name=".trans.CompletionActivity" />
+        <activity android:name=".trans.QueryActivity" />
+        <activity android:name=".trans.ReprintActivity" />
+        <activity android:name=".trans.DebiCheckActivity"/>
+        <activity android:name=".trans.BatchCloseActivity"/>
+        <activity android:name=".trans.TipAdjustmentActivity" />
+    </application>
+
+</manifest>
