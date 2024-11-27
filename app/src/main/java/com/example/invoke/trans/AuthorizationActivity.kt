@@ -63,7 +63,7 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
             jsonObject.put("order_amount", et_amount.text.toString())
             jsonObject.put("on_screen_signature", cb_signature.isChecked)
             jsonObject.put("on_screen_tip", cb_screen_tip.isChecked)
-            jsonObject.put("trans_type", InvokeConstant.PURCHASE)
+            jsonObject.put("trans_type", InvokeConstant.PRE_AUTH)
             if (et_tip.text.toString().isNotEmpty()) {
                 jsonObject.put("tip_amount", et_tip.text.toString())
             }

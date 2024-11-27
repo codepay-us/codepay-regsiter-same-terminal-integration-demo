@@ -84,7 +84,6 @@ class SaleActivity : Activity(), View.OnClickListener {
     ) {
         if (checkTextIsEmpty(mContext, et_amount)) return
         val intent = Intent()
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         intent.action = InvokeConstant.CASHIER_ACTION
         intent.putExtra("version", InvokeConstant.VERSIONV2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
@@ -101,23 +100,6 @@ class SaleActivity : Activity(), View.OnClickListener {
             jsonObject.put("trans_type", InvokeConstant.PURCHASE)
             if (et_tip.text.toString().isNotEmpty() && paymentScenario != "2") {
                 jsonObject.put("tip_amount", et_tip.text.toString())
-            }
-            radioGroup = findViewById(R.id.radioGroup)
-            val checkedRadioButtonId = radioGroup.checkedRadioButtonId
-            if (checkedRadioButtonId != -1) {
-                val radioButton = findViewById<RadioButton>(checkedRadioButtonId)
-                val printReceiptIntValue = when (radioButton.text.toString()) {
-                    "No print" -> 0
-                    "Merchant" -> 1
-                    "CardHolder" -> 2
-                    "All" -> 3
-                    else -> -1
-                }
-                if (printReceiptIntValue != -1) {
-                    jsonObject.put("receipt_print_mode", printReceiptIntValue)
-                } else {
-                    LogUtils.setLog(TAG, "Not select printReceipt")
-                }
             }
             jsonObject.put("description", et_note.text.toString())
             intent.putExtra("biz_data", jsonObject.toString())
