@@ -44,9 +44,11 @@ class SaleWithCashbackActivity : Activity(), View.OnClickListener {
         intent.action = InvokeConstant.CASHIER_ACTION
         intent.putExtra("version", InvokeConstant.VERSION)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
+        intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
 
         var jsonObject = JSONObject()
         try {
+            jsonObject.put("trans_type", InvokeConstant.CASH_BACK)
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
             jsonObject.put("card_network", "2")//credit
             jsonObject.put("order_amount", et_amount_consume.text.toString())
