@@ -18,9 +18,6 @@
             android:name=".trans.SaleWithCashbackActivity"
             android:exported="false" />
         <activity
-            android:name=".trans.BalanceActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -35,7 +32,6 @@
         <activity android:name=".trans.AuthorizationActivity" />
         <activity android:name=".trans.CompletionActivity" />
         <activity android:name=".trans.QueryActivity" />
-        <activity android:name=".trans.ReprintActivity" />
         <activity android:name=".trans.BatchCloseActivity"/>
         <activity android:name=".trans.TipAdjustmentActivity" />
     </application>
