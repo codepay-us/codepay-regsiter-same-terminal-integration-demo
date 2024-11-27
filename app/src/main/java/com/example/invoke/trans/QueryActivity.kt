@@ -23,7 +23,6 @@ class QueryActivity : Activity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_void)
-        radioGroup.visibility = View.GONE
         btn_start_trans_void.setOnClickListener(this)
         btn_start_trans_void.text = "Query"
     }

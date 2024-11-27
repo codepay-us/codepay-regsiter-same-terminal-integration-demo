@@ -92,72 +92,7 @@
         android:textColor="#000"
         android:textSize="18sp"
         android:visibility="gone" />
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="20dp">-->
-<!--    <CheckBox-->
-<!--        android:id="@+id/cb_signature"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="screen signature"-->
-<!--        android:checked="false" />-->
 
-<!--&lt;!&ndash;    <View&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="30dp"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="0dp" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;    <CheckBox&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@+id/support_print"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:checked="true"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:text="@string/print" />&ndash;&gt;-->
-
-<!--    </LinearLayout>-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Print:"
-                android:textColor="#000000" />
-
-            <RadioButton
-                android:id="@+id/option_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="No print" />
-
-            <RadioButton
-                android:id="@+id/option_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Merchant" />
-
-            <RadioButton
-                android:id="@+id/option_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CardHolder" />
-
-            <RadioButton
-                android:id="@+id/option_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All" />
-        </RadioGroup>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

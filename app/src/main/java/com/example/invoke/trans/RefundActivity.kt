@@ -67,33 +67,13 @@ class RefundActivity : Activity(), View.OnClickListener {
             if (cb_reference.isChecked){
                 Log.e(TAG, "进行无参考退款")
             } else {
-                if (et_origin_business_no.text.toString().isNotEmpty()){
-                    jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
-                } else {
-                    jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
-                    Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
-                }
+                if (ViewUtil.checkTextIsEmpty(this, et_origin_business_no)) return
+                jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
             }
             jsonObject.put("pay_scenario", paymentScenario)
             jsonObject.put("notify_url", InvokeConstant.NOTIFY_URL)
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            radioGroup = findViewById(R.id.radioGroup)
-            val checkedRadioButtonId = radioGroup.checkedRadioButtonId
-            if (checkedRadioButtonId != -1) {
-                val radioButton = findViewById<RadioButton>(checkedRadioButtonId)
-                val printReceiptIntValue = when (radioButton.text.toString()) {
-                    "No print" -> 0
-                    "Merchant" -> 1
-                    "CardHolder" -> 2
-                    "All" -> 3
-                    else -> -1
-                }
-                if (printReceiptIntValue != -1) {
-                    jsonObject.put("receipt_print_mode", printReceiptIntValue)
-                } else {
-                    LogUtils.setLog(TAG,"Not select printReceipt")
-                }
-            }
+
             jsonObject.put("order_amount", getAmount(et_amount_refund))
             jsonObject.put("tip_amount", getAmount(et_tip_amount_refund))
             jsonObject.put("trans_type", InvokeConstant.REFUND)
