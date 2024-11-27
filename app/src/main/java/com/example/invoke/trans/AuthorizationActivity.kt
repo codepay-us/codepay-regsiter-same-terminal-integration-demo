@@ -14,12 +14,6 @@ import com.example.invoke.constant.InvokeConstant.INVOKE_BANKCARD_PAY_TYPE
 import com.example.invoke.utils.DateUtil
 import com.example.invoke.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_authorization.*
-import kotlinx.android.synthetic.main.activity_sale.cb_screen_tip
-import kotlinx.android.synthetic.main.activity_sale.cb_signature
-import kotlinx.android.synthetic.main.activity_sale.et_amount
-import kotlinx.android.synthetic.main.activity_sale.et_note
-import kotlinx.android.synthetic.main.activity_sale.et_tip
-import kotlinx.android.synthetic.main.activity_sale.tv_result
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -55,6 +49,7 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
         intent.action = InvokeConstant.CASHIER_ACTION
         intent.putExtra("version", InvokeConstant.VERSIONV2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
+        intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         var jsonObject = JSONObject()
         try {
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
@@ -62,29 +57,8 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
             jsonObject.put("card_network_type", "2")
             jsonObject.put("order_amount", et_amount.text.toString())
             jsonObject.put("on_screen_signature", cb_signature.isChecked)
-            jsonObject.put("on_screen_tip", cb_screen_tip.isChecked)
             jsonObject.put("trans_type", InvokeConstant.PRE_AUTH)
-            if (et_tip.text.toString().isNotEmpty()) {
-                jsonObject.put("tip_amount", et_tip.text.toString())
-            }
-            radioGroup = findViewById(R.id.radioGroup)
-            val checkedRadioButtonId = radioGroup.checkedRadioButtonId
-            if (checkedRadioButtonId != -1) {
-                val radioButton = findViewById<RadioButton>(checkedRadioButtonId)
-                val printReceiptIntValue = when (radioButton.text.toString()) {
-                    "No print" -> 0
-                    "Merchant" -> 1
-                    "CardHolder" -> 2
-                    "All" -> 3
-                    else -> -1
-                }
-                if (printReceiptIntValue != -1) {
-                    jsonObject.put("receipt_print_mode", printReceiptIntValue)
-                } else {
-                    LogUtils.setLog(TAG, "Not select printReceipt")
-                }
-            }
-            jsonObject.put("description", et_note.text.toString())
+            jsonObject.put("description", "your description")
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

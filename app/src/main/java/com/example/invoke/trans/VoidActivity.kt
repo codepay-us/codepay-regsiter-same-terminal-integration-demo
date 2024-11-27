@@ -39,11 +39,11 @@ class VoidActivity : Activity(), View.OnClickListener {
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         val jsonObject = JSONObject()
         try {
+            jsonObject.put("trans_type",InvokeConstant.VOID)
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
             if (et_ori_business_order_no.text.toString().isNotEmpty()){
                 jsonObject.put("orig_merchant_order_no", et_ori_business_order_no.text.toString())
             }
-            jsonObject.put("trans_type",InvokeConstant.VOID)
             intent.putExtra("transData", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

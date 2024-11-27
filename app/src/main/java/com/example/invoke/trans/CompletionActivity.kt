@@ -14,11 +14,7 @@ import com.example.invoke.constant.InvokeConstant
 import com.example.invoke.utils.DateUtil
 import com.example.invoke.utils.LogUtils
 import com.example.invoke.utils.ViewUtil
-import kotlinx.android.synthetic.main.activity_completion.et_amount
-import kotlinx.android.synthetic.main.activity_completion.tv_result
-import kotlinx.android.synthetic.main.activity_refund.et_amount_refund
-import kotlinx.android.synthetic.main.activity_refund.et_origin_business_no
-import kotlinx.android.synthetic.main.activity_refund.et_tip_amount_refund
+import kotlinx.android.synthetic.main.activity_completion.*
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -45,48 +41,20 @@ class CompletionActivity : Activity(), View.OnClickListener {
 
     private fun startTrans() {
         if (ViewUtil.checkTextIsEmpty(mContext, et_amount)) return
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         var intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
         intent.putExtra("version", InvokeConstant.VERSIONV2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
+        intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         var jsonObject = JSONObject()
         try {
-            if (et_origin_business_no.text.toString().isNotEmpty()) {
-                jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
-            } else {
-                jsonObject.put(
-                    "orig_merchant_order_no",
-                    sharedPreferences.getString("businessOrderNo", "").toString()
-                )
-                Log.e(
-                    TAG,
-                    "使用上一笔交易订单号 : ${
-                        sharedPreferences.getString("businessOrderNo", "").toString()
-                    }"
-                )
-            }
+
+            jsonObject.put("orig_merchant_order_no", et_ori_business_order_no.text.toString())
             jsonObject.put("notify_url", InvokeConstant.NOTIFY_URL)
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            radioGroup = findViewById(R.id.radioGroup)
-            val checkedRadioButtonId = radioGroup.checkedRadioButtonId
-            if (checkedRadioButtonId != -1) {
-                val radioButton = findViewById<RadioButton>(checkedRadioButtonId)
-                val printReceiptIntValue = when (radioButton.text.toString()) {
-                    "No print" -> 0
-                    "Merchant" -> 1
-                    "CardHolder" -> 2
-                    "All" -> 3
-                    else -> -1
-                }
-                if (printReceiptIntValue != -1) {
-                    jsonObject.put("receipt_print_mode", printReceiptIntValue)
-                } else {
-                    LogUtils.setLog(TAG, "Not select printReceipt")
-                }
-            }
-            jsonObject.put("order_amount", ViewUtil.getAmount(et_amount_refund))
-            jsonObject.put("tip_amount", ViewUtil.getAmount(et_tip_amount_refund))
+
+            jsonObject.put("order_amount", ViewUtil.getAmount(et_amount))
+            jsonObject.put("tip_amount", ViewUtil.getAmount(et_tip_amount))
             jsonObject.put("trans_type", InvokeConstant.PRE_AUTH_COMPLETE)
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
