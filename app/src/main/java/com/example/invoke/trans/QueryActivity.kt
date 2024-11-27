@@ -10,6 +10,7 @@ import com.example.invoke.utils.ViewUtil.checkTextIsEmpty
 import com.example.invoke.R
 import com.example.invoke.constant.InvokeConstant
 import com.example.invoke.utils.LogUtils
+import kotlinx.android.synthetic.main.activity_sale.tv_result
 import kotlinx.android.synthetic.main.activity_void.*
 //import kotlinx.android.synthetic.main.activity_void.cb_signature
 import org.json.JSONException
@@ -19,23 +20,10 @@ class QueryActivity : Activity(), View.OnClickListener {
 
     private val TAG = "QueryActivity"
 
-    private var autoClick: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_void)
-//        cb_signature.visibility = View.GONE
-//        cb_not_read_card.visibility = View.GONE
         radioGroup.visibility = View.GONE
-        autoClick = intent.getBooleanExtra("autoClick", false)
-        LogUtils.setLog(TAG, "$autoClick")
-        if (autoClick) {
-            // 自动点击银行卡支付按钮
-            val handler = Handler()
-            handler.postDelayed({
-                btn_start_trans_void.performClick()
-            }, 2000) // 延迟2秒，确保页面加载完成后再点击按钮
-        }
         btn_start_trans_void.setOnClickListener(this)
         btn_start_trans_void.text = "Query"
     }
@@ -44,30 +32,6 @@ class QueryActivity : Activity(), View.OnClickListener {
         when (v.id) {
             R.id.btn_start_trans_void -> startTrans2()
         }
-    }
-
-    private fun startTrans() {
-        val intent = Intent()
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSION)
-        intent.putExtra("transType", InvokeConstant.QUERY)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
-        val jsonObject = JSONObject()
-        try {
-            if (et_ori_business_order_no.text.toString().isNotEmpty()){
-                jsonObject.put("businessOrderNo", et_ori_business_order_no.text.toString())
-            } else {
-                jsonObject.put("businessOrderNo", sharedPreferences.getString("businessOrderNo","").toString())
-                Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
-            }
-//            jsonObject.put("businessOrderNo", et_ori_business_order_no.text.toString())
-            intent.putExtra("transData", jsonObject.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Log.e(TAG, "开始交易 : $jsonObject")
-        startActivityForResult(intent, InvokeConstant.REQUEST_VOID)
     }
 
     private fun startTrans2() {
@@ -85,7 +49,6 @@ class QueryActivity : Activity(), View.OnClickListener {
                 jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
                 Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
             }
-//            jsonObject.put("businessOrderNo", et_ori_business_order_no.text.toString())
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -97,32 +60,27 @@ class QueryActivity : Activity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG, "三方调用收到信息，resultCode = $resultCode")
-        if (resultCode == RESULT_OK) {
-            val version = data?.getStringExtra(InvokeConstant.version)
-            val transType = data?.getStringExtra(InvokeConstant.transType)
-            val result = data?.getStringExtra(InvokeConstant.result)
-            val resultMsg = data?.getStringExtra(InvokeConstant.resultMsg)
-            val transData = data?.getStringExtra(InvokeConstant.transData)
+        Log.e(TAG, "resultCode = $resultCode")
 
-            var showText = "version = $version \ntransType = $transType \nresult = $result \n"
-            showText = resultMsg?.let { showText + "resultMsg = $it \n" } ?: showText
-            showText = transData?.let { showText + "transData = $it" } ?: showText
-            Log.e(TAG, "查询结果：$showText")
+        if (resultCode == RESULT_OK && data != null) {
+            val version = data.getStringExtra(InvokeConstant.version)
+            val transType = data.getStringExtra(InvokeConstant.transType)
+            val result = data.getStringExtra(InvokeConstant.result)
+                ?: data.getStringExtra(InvokeConstant.BizData)
+            val resultMsg = data.getStringExtra(InvokeConstant.resultMsg)
+                ?: data.getStringExtra(InvokeConstant.ResponseMsg)
+            val transData = data.getStringExtra(InvokeConstant.transData)
+                ?: data.getStringExtra(InvokeConstant.ResponseCode)
+
+            var showText = "version = $version \n"
+            showText += if (transType != null) "transType = $transType \n" else ""
+            showText += "result = $result \n"
+            showText = resultMsg?.let { "$showText resultMsg = $it \n" } ?: showText
+            showText = transData?.let { "$showText transData/responseCode = $it" } ?: showText
+
+            Log.e(TAG, "Result：$showText")
             tv_result.text = showText
-            // 等待 3 秒
-//            Thread.sleep(3000)
-            if (autoClick) {
-                performCashOperation()
-            }
         }
     }
 
-    private fun performCashOperation() {
-        // 执行 CashBack 操作的逻辑
-        val cashIntent = Intent(this, SaleWithCashbackActivity::class.java)
-        cashIntent.putExtra("autoClick", true)
-        startActivity(cashIntent)
-        LogUtils.setLog(TAG, "执行 CashBack 操作")
-    }
 }

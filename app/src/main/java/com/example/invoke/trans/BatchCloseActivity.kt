@@ -36,68 +36,38 @@ class BatchCloseActivity : Activity(), View.OnClickListener {
         }
     }
 
-    private fun startTrans() {
-
-        val intent = Intent()
-        intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSION1)
-        intent.putExtra("transType", InvokeConstant.BATCH_CLOSE)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
-        val jsonObject = JSONObject()
-        try {
-            jsonObject.put("businessOrderNo", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            intent.putExtra("transData", jsonObject.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        startActivityForResult(intent, InvokeConstant.REQUEST_BALANCE_INQUIRY)
-    }
-
     private fun start2Trans() {
 
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSION1)
-        intent.putExtra("transType", InvokeConstant.BATCH_CLOSE)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
+        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", ECR_HUB_TOPIC_BATCH_CLOSE)
-        val jsonObject = JSONObject()
-        try {
-            jsonObject.put("businessOrderNo", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            intent.putExtra("biz_data", jsonObject.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
         startActivityForResult(intent, InvokeConstant.REQUEST_BALANCE_INQUIRY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e(
-            TAG, "requestCode:$requestCode," +
-                    "resultCode:$resultCode ," +
-                    "result:${data?.getStringExtra("result")}," +
-                    "resultMsg:${data?.getStringExtra("resultMsg")}," +
-                    "transType:${data?.getStringExtra("transType")}"
-        )
+        Log.e(TAG, "resultCode = $resultCode")
 
-        Log.e(TAG, "transData:${data?.getStringExtra("transData")}")
-        if (resultCode == RESULT_OK) {
-            if ("00" == data?.getStringExtra("result")) {
-                Log.e(TAG, "0")
-                tv_result.text = "requestCode : $requestCode\n " +
-                        "resultCode : $resultCode\n" +
-                        "transType : ${data.getStringExtra("transType")}\n" +
-                        "result :  ${data.getStringExtra("result")}\n" +
-                        "transData : ${data.getStringExtra("transData")}"
-            } else {
-                Log.e(TAG, "-1")
-                tv_result.text = "requestCode : $requestCode\n" +
-                        "resultCode : $resultCode\n " +
-                        "transType : ${data?.getStringExtra("transType")}\n" +
-                        "result : ${data?.getStringExtra("result")}\n" +
-                        "resultMsg : ${data?.getStringExtra("resultMsg")}\n"
-            }
+        if (resultCode == RESULT_OK && data != null) {
+            val version = data.getStringExtra(InvokeConstant.version)
+            val transType = data.getStringExtra(InvokeConstant.transType)
+            val result = data.getStringExtra(InvokeConstant.result)
+                ?: data.getStringExtra(InvokeConstant.BizData)
+            val resultMsg = data.getStringExtra(InvokeConstant.resultMsg)
+                ?: data.getStringExtra(InvokeConstant.ResponseMsg)
+            val transData = data.getStringExtra(InvokeConstant.transData)
+                ?: data.getStringExtra(InvokeConstant.ResponseCode)
+
+            var showText = "version = $version \n"
+            showText += if (transType != null) "transType = $transType \n" else ""
+            showText += "result = $result \n"
+            showText = resultMsg?.let { "$showText resultMsg = $it \n" } ?: showText
+            showText = transData?.let { "$showText transData/responseCode = $it" } ?: showText
+
+            Log.e(TAG, "Result：$showText")
+            tv_result.text = showText
         }
     }
 }

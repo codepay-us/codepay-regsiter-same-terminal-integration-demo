@@ -3,7 +3,6 @@ package com.example.invoke.trans
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
@@ -11,9 +10,16 @@ import android.widget.RadioGroup
 import com.example.invoke.utils.ViewUtil
 import com.example.invoke.R
 import com.example.invoke.constant.InvokeConstant
+import com.example.invoke.constant.InvokeConstant.INVOKE_BANKCARD_PAY_TYPE
 import com.example.invoke.utils.DateUtil
 import com.example.invoke.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_authorization.*
+import kotlinx.android.synthetic.main.activity_sale.cb_screen_tip
+import kotlinx.android.synthetic.main.activity_sale.cb_signature
+import kotlinx.android.synthetic.main.activity_sale.et_amount
+import kotlinx.android.synthetic.main.activity_sale.et_note
+import kotlinx.android.synthetic.main.activity_sale.et_tip
+import kotlinx.android.synthetic.main.activity_sale.tv_result
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -29,24 +35,9 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
 
     private val TAG = AuthorizationActivity::class.java.simpleName
     private lateinit var radioGroup: RadioGroup
-
-    private var autoClick: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
-        autoClick = intent.getBooleanExtra("autoClick", false)
-        LogUtils.setLog(TAG, "$autoClick")
-        // 检查是否通过特定方式启动页面
-        if (autoClick) {
-            // 自动点击银行卡支付按钮
-            val handler = Handler()
-            handler.postDelayed({
-                val amount = "150.87"
-                et_amount.setText(amount)
-                btn_start_trans.performClick()
-            }, 2000) // 延迟2秒，确保页面加载完成后再点击按钮
-        }
         btn_start_trans.setOnClickListener(this)
         btn_start_trans.text = "Auth"
     }
@@ -62,18 +53,19 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
 
         var intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSION)
-        intent.putExtra("transType", InvokeConstant.PRE_AUTH)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
+        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("app_id", InvokeConstant.APP_ID)
         var jsonObject = JSONObject()
         try {
-            jsonObject.put("businessOrderNo", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            jsonObject.put("cardType", "2")//Credit
-            jsonObject.put("amt", et_amount.text.toString())
-            jsonObject.put("notifyUrl", InvokeConstant.NOTIFY_URL)
-            jsonObject.put("onScreenSignature", cb_signature.isChecked)
-            if (cb_manual.isChecked) {
-                jsonObject.put("entryMode", 4)
+            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
+            jsonObject.put("pay_scenario", INVOKE_BANKCARD_PAY_TYPE)
+            jsonObject.put("card_network_type", "2")
+            jsonObject.put("order_amount", et_amount.text.toString())
+            jsonObject.put("on_screen_signature", cb_signature.isChecked)
+            jsonObject.put("on_screen_tip", cb_screen_tip.isChecked)
+            jsonObject.put("trans_type", InvokeConstant.PURCHASE)
+            if (et_tip.text.toString().isNotEmpty()) {
+                jsonObject.put("tip_amount", et_tip.text.toString())
             }
             radioGroup = findViewById(R.id.radioGroup)
             val checkedRadioButtonId = radioGroup.checkedRadioButtonId
@@ -87,44 +79,41 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
                     else -> -1
                 }
                 if (printReceiptIntValue != -1) {
-                    jsonObject.put("receiptPrintMode", printReceiptIntValue)
+                    jsonObject.put("receipt_print_mode", printReceiptIntValue)
                 } else {
-                    LogUtils.setLog(TAG,"Not select printReceipt")
+                    LogUtils.setLog(TAG, "Not select printReceipt")
                 }
             }
-            intent.putExtra("transData", jsonObject.toString())
+            jsonObject.put("description", et_note.text.toString())
+            intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("businessOrderNo", jsonObject.getString("businessOrderNo"))
-        Log.e(TAG,"获取businessOrderNo :  ${jsonObject.getString("businessOrderNo")}")
-        Log.e(TAG, "开始交易 : $jsonObject")
-        editor.apply()
         startActivityForResult(intent, InvokeConstant.REQUEST_PREAUTH)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG, "三方调用收到信息，resultCode = $resultCode")
-        if (resultCode == RESULT_OK) {
-            val version = data?.getStringExtra(InvokeConstant.version)
-            val transType = data?.getStringExtra(InvokeConstant.transType)
-            val result = data?.getStringExtra(InvokeConstant.result)
-            val resultMsg = data?.getStringExtra(InvokeConstant.resultMsg)
-            val transData = data?.getStringExtra(InvokeConstant.transData)
+        Log.e(TAG, "resultCode = $resultCode")
 
-            var showText = "version = $version \ntransType = $transType \nresult = $result \n"
-            showText = resultMsg?.let { showText + "resultMsg = $it \n" } ?: showText
-            showText = transData?.let { showText + "transData = $it" } ?: showText
-            Log.e(TAG, "预授权结果：$showText")
+        if (resultCode == RESULT_OK && data != null) {
+            val version = data.getStringExtra(InvokeConstant.version)
+            val transType = data.getStringExtra(InvokeConstant.transType)
+            val result = data.getStringExtra(InvokeConstant.result)
+                ?: data.getStringExtra(InvokeConstant.BizData)
+            val resultMsg = data.getStringExtra(InvokeConstant.resultMsg)
+                ?: data.getStringExtra(InvokeConstant.ResponseMsg)
+            val transData = data.getStringExtra(InvokeConstant.transData)
+                ?: data.getStringExtra(InvokeConstant.ResponseCode)
+
+            var showText = "version = $version \n"
+            showText += if (transType != null) "transType = $transType \n" else ""
+            showText += "result = $result \n"
+            showText = resultMsg?.let { "$showText resultMsg = $it \n" } ?: showText
+            showText = transData?.let { "$showText transData/responseCode = $it" } ?: showText
+
+            Log.e(TAG, "Result：$showText")
             tv_result.text = showText
-            // 等待 3 秒
-//            Thread.sleep(3000)
-            if (resultMsg == "Success" && autoClick) {
-                performCompleteOperation()
-            }
         }
     }
 

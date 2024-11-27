@@ -59,11 +59,11 @@ object InvokeConstant {
 
     //FIXED
     //Please don't change these parameter,otherwise the transaction will be failed.
-    const val PURCHASE = "01"
-    const val VOID = "02"
-    const val REFUND = "03"
-    const val PRE_AUTH = "04"
-    const val PRE_AUTH_COMPLETE = "06"
+    const val PURCHASE = "1"
+    const val VOID = "2"
+    const val REFUND = "3"
+    const val PRE_AUTH = "4"
+    const val PRE_AUTH_COMPLETE = "6"
     const val BALANCE = "BALANCE"
     const val CASH_BACK = "11"
     const val BATCH_CLOSE = "23"

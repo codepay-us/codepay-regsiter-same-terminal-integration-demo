@@ -36,7 +36,6 @@
         <activity android:name=".trans.CompletionActivity" />
         <activity android:name=".trans.QueryActivity" />
         <activity android:name=".trans.ReprintActivity" />
-        <activity android:name=".trans.DebiCheckActivity"/>
         <activity android:name=".trans.BatchCloseActivity"/>
         <activity android:name=".trans.TipAdjustmentActivity" />
     </application>

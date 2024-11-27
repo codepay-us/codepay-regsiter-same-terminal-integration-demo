@@ -31,12 +31,10 @@ class MainActivity : Activity(), View.OnClickListener {
         findViewById<Button>(R.id.btn_sale_trans).setOnClickListener(this)
         findViewById<Button>(R.id.btn_void).setOnClickListener(this)
         findViewById<Button>(R.id.btn_refund_trans).setOnClickListener(this)
-        findViewById<Button>(R.id.btn_balance_inquiry).setOnClickListener(this)
         findViewById<Button>(R.id.btn_cash_back).setOnClickListener(this)
         findViewById<Button>(R.id.btn_authorization_trans).setOnClickListener(this)
         findViewById<Button>(R.id.btn_completion_trans).setOnClickListener(this)
         findViewById<Button>(R.id.btn_query).setOnClickListener(this)
-        findViewById<Button>(R.id.btn_reprint).setOnClickListener(this)
         findViewById<Button>(R.id.btn_test).setOnClickListener(this)
         findViewById<Button>(R.id.btn_get).setOnClickListener(this)
         findViewById<Button>(R.id.btn_tip_adjustment).setOnClickListener(this)
@@ -62,10 +60,6 @@ class MainActivity : Activity(), View.OnClickListener {
             R.id.btn_refund_trans -> {
                 startActivity(Intent(this, RefundActivity::class.java))
             }
-            //BALANCE INQUIRY
-            R.id.btn_balance_inquiry -> {
-                startActivity(Intent(this, BalanceActivity::class.java))
-            }
             //CASH BACK
             R.id.btn_cash_back -> {
                 startActivity(Intent(this, SaleWithCashbackActivity::class.java))
@@ -78,21 +72,19 @@ class MainActivity : Activity(), View.OnClickListener {
             R.id.btn_completion_trans -> {
                 startActivity(Intent(this, CompletionActivity::class.java))
             }
+
             R.id.btn_query -> {
                 startActivity(Intent(this, QueryActivity::class.java))
             }
-            R.id.btn_reprint -> {
-                startActivity(Intent(this, ReprintActivity::class.java))
-            }
+
             R.id.btn_tip_adjustment -> {
                 startActivity(Intent(this, TipAdjustmentActivity::class.java))
             }
+
             R.id.btn_batch_close -> {
                 startActivity(Intent(this, BatchCloseActivity::class.java))
             }
-            R.id.btn_debi_check -> {
-                startActivity(Intent(this, DebiCheckActivity::class.java))
-            }
+
             R.id.btn_test -> {
                 runOnUiThread {
                     Toast.makeText(this, "Please prepare your card", Toast.LENGTH_LONG).show()
@@ -101,14 +93,19 @@ class MainActivity : Activity(), View.OnClickListener {
                 intent.putExtra("autoClick", true) // 设置标志位
                 startActivity(intent)
             }
+
             R.id.btn_get -> {
                 val availableMemory = getAvailableMemory(this)
                 val totalMemory = getTotalMemory(this)
                 val availableStorage = getAvailableStorage()
                 val totalStorage = getTotalStorage()
 
-                val memoryInfo = "Memory: Available ${formatSize(availableMemory)}, Total ${formatSize(totalMemory)}"
-                val storageInfo = "Storage: Available ${formatSize(availableStorage)}, Total ${formatSize(totalStorage)}"
+                val memoryInfo = "Memory: Available ${formatSize(availableMemory)}, Total ${
+                    formatSize(totalMemory)
+                }"
+                val storageInfo = "Storage: Available ${formatSize(availableStorage)}, Total ${
+                    formatSize(totalStorage)
+                }"
                 Log.e(TAG, "$memoryInfo\n$storageInfo")
 
                 runOnUiThread {
@@ -150,11 +147,13 @@ class MainActivity : Activity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG, "requestCode:$requestCode," +
-                "resultCode:$resultCode ," +
-                "result:${data?.getStringExtra("result")}," +
-                "resultMsg:${data?.getStringExtra("resultMsg")}," +
-                "transType:${data?.getStringExtra("transType")}")
+        Log.e(
+            TAG, "requestCode:$requestCode," +
+                    "resultCode:$resultCode ," +
+                    "result:${data?.getStringExtra("result")}," +
+                    "resultMsg:${data?.getStringExtra("resultMsg")}," +
+                    "transType:${data?.getStringExtra("transType")}"
+        )
 
         Log.e(TAG, "transData:${data?.getStringExtra("transData")}")
         if (resultCode == RESULT_OK) {

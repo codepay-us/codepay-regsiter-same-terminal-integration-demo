@@ -23,8 +23,6 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
     private val TAG = "TipAdjustmentActivity"
 
     private lateinit var mContext: Context
-    private var selectDate = DateUtil.StringToDate(DateUtil.getCurDateStr("yyyyMMdd"), "yyyyMMdd")
-    private val format = SimpleDateFormat("yyyyMMdd")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,31 +42,11 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
     }
 
 
-    private fun startTrans() {
-        val intent = Intent()
-        intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSION1)
-        intent.putExtra("transType", InvokeConstant.TIP_ADJUSTMENT)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
-        val jsonObject = JSONObject()
-        try {
-            jsonObject.put("originBusinessOrderNo", et_origin_business_no.text.toString())
-            jsonObject.put("businessOrderNo", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            jsonObject.put("tipAdjustmentAmount", ViewUtil.getAmount(et_tip_amount))
-            intent.putExtra("transData", jsonObject.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Log.e(TAG, "data:${jsonObject}")
-        startActivityForResult(intent, InvokeConstant.REQUEST_REFUND)
-    }
-
     private fun startTrans2() {
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         intent.putExtra("version", InvokeConstant.VERSIONV2)
-        intent.putExtra("transType", InvokeConstant.TIP_ADJUSTMENT)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_TIP_ADJUSTMENT)
         val jsonObject = JSONObject()
@@ -79,14 +57,13 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
                 jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
                 Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
             }
-//            jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
             jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
             jsonObject.put("tip_adjustment_amount", ViewUtil.getAmount(et_tip_amount))
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        Log.e(TAG, "biz_data: ${jsonObject}")
+        Log.e(TAG, "biz_data: $jsonObject")
         startActivityForResult(intent, InvokeConstant.REQUEST_BALANCE_INQUIRY)
     }
 

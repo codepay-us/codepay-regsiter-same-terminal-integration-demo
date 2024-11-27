@@ -156,46 +156,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_start_trans_bankcard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1.2"
-            android:text="CARD" />
-
-        <Button
-            android:id="@+id/btn_start_trans_scan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="Scan" />
-
-        <Button
-            android:id="@+id/btn_start_trans_qr"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="Qr Pay" />
-
-        <Button
-            android:id="@+id/btn_start_trans_cash"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:text="Cash" />
-
-    </LinearLayout>
-
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"
