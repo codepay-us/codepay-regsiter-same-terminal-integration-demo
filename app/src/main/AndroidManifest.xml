@@ -33,7 +33,8 @@
         <activity android:name=".trans.CompletionActivity" />
         <activity android:name=".trans.QueryActivity" />
         <activity android:name=".trans.BatchCloseActivity"/>
-        <activity android:name=".trans.TipAdjustmentActivity" />
+        <activity android:name=".trans.TipAdjustmentActivity"/>
+        <activity android:name=".trans.ReprintActivity"/>
     </application>
 
 </manifest>

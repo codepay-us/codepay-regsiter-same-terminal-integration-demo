@@ -6,9 +6,12 @@ object InvokeConstant {
 
     const val ECR_HUB_TOPIC_TIP_ADJUSTMENT = "ecrhub.pay.tip.adjustment"
 
-    val ECR_HUB_TOPIC_BATCH_CLOSE = "ecrhub.pay.batch.close"
+    const val ECR_HUB_TOPIC_BATCH_CLOSE = "ecrhub.pay.batch.close"
 
     const val ECR_HUB_TOPIC_QUERY = "ecrhub.pay.query"
+
+    const val ECR_HUB_TOPIC_REPRINT = "ecrhub.pay.reprint"
+
     /**
      * 银行卡支付方式
      */

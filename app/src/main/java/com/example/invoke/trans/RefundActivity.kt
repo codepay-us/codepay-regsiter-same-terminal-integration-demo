@@ -57,7 +57,6 @@ class RefundActivity : Activity(), View.OnClickListener {
         paymentScenario: String) {
         if (ViewUtil.checkTextIsEmpty(this, et_amount_refund)) return
         val intent = Intent()
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         intent.action = InvokeConstant.CASHIER_ACTION
         intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("topic",InvokeConstant.ECR_HUB_TOPIC_PAY)

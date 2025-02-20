@@ -30,6 +30,7 @@ class MainActivity : Activity(), View.OnClickListener {
         findViewById<Button>(R.id.btn_query).setOnClickListener(this)
         findViewById<Button>(R.id.btn_tip_adjustment).setOnClickListener(this)
         findViewById<Button>(R.id.btn_batch_close).setOnClickListener(this)
+        findViewById<Button>(R.id.btn_batch_reprint).setOnClickListener(this)
     }
 
     // start third call test
@@ -74,6 +75,10 @@ class MainActivity : Activity(), View.OnClickListener {
 
             R.id.btn_batch_close -> {
                 startActivity(Intent(this, BatchCloseActivity::class.java))
+            }
+
+            R.id.btn_batch_reprint -> {
+                startActivity(Intent(this, ReprintActivity::class.java))
             }
         }
     }
