@@ -85,23 +85,24 @@ class SaleActivity : Activity(), View.OnClickListener {
         if (checkTextIsEmpty(mContext, et_amount)) return
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-            jsonObject.put("pay_scenario", paymentScenario)
-            jsonObject.put("card_network_type", "2")
-            jsonObject.put("pay_method_id", paymentMethod)
-            jsonObject.put("order_amount", et_amount.text.toString())
-            jsonObject.put("on_screen_signature", cb_signature.isChecked)
-            jsonObject.put("on_screen_tip", cb_screen_tip.isChecked)
             jsonObject.put("trans_type", InvokeConstant.PURCHASE)
+            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
+            jsonObject.put("order_amount", et_amount.text.toString())
             if (et_tip.text.toString().isNotEmpty() && paymentScenario != "2") {
                 jsonObject.put("tip_amount", et_tip.text.toString())
             }
+            jsonObject.put("on_screen_tip", cb_screen_tip.isChecked)
+            jsonObject.put("on_screen_signature", cb_signature.isChecked)
+            jsonObject.put("pay_method_id", paymentMethod)
+            jsonObject.put("pay_scenario", paymentScenario)
+            jsonObject.put("card_network_type", "2")
             jsonObject.put("description", et_note.text.toString())
+            jsonObject.put("notify_url", "your notify url")
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

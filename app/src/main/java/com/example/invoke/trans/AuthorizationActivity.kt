@@ -47,7 +47,7 @@ class AuthorizationActivity : Activity(), View.OnClickListener {
 
         var intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         var jsonObject = JSONObject()

@@ -76,13 +76,9 @@ object InvokeConstant {
     const val CASHIER_ACTION = "com.codepay.transaction.call"
     const val VERSION = "1.1"
     const val VERSION1 = "1.1"
-    const val VERSIONV2 = "2.0"
-    const val NOTIFY_URL = "https://starfish-renewing-thankfully.ngrok-free.app"
+    const val VERSION2 = "2.0"
+    const val NOTIFY_URL = "Your NOTIFY_URL"
     const val APP_ID = "wz2b6cef2f18008ee7"
-    // Peblla ：wz28228f695f9296a3
-    // CodePay : wz6012822ca2f1as78
-    // UP: wz67b390f777005a41
-    //CodePay prod : wz2b6cef2f18008ee7
     /**
      * result data key
      */

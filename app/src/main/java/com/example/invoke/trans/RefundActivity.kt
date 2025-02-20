@@ -59,24 +59,23 @@ class RefundActivity : Activity(), View.OnClickListener {
         val intent = Intent()
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("topic",InvokeConstant.ECR_HUB_TOPIC_PAY)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         val jsonObject = JSONObject()
         try {
+            jsonObject.put("trans_type", InvokeConstant.REFUND)
+            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
             if (cb_reference.isChecked){
                 Log.e(TAG, "进行无参考退款")
             } else {
                 if (ViewUtil.checkTextIsEmpty(this, et_origin_business_no)) return
                 jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
             }
-            jsonObject.put("pay_scenario", paymentScenario)
-            jsonObject.put("notify_url", InvokeConstant.NOTIFY_URL)
-            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
-
             jsonObject.put("order_amount", getAmount(et_amount_refund))
             jsonObject.put("tip_amount", getAmount(et_tip_amount_refund))
-            jsonObject.put("trans_type", InvokeConstant.REFUND)
+            jsonObject.put("pay_scenario", paymentScenario)
+            jsonObject.put("notify_url", InvokeConstant.NOTIFY_URL)
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

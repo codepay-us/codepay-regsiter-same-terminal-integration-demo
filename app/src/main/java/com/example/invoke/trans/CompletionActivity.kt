@@ -43,7 +43,7 @@ class CompletionActivity : Activity(), View.OnClickListener {
         if (ViewUtil.checkTextIsEmpty(mContext, et_amount)) return
         var intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         var jsonObject = JSONObject()

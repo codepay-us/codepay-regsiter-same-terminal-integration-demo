@@ -10,6 +10,7 @@ import com.example.invoke.utils.ViewUtil.checkTextIsEmpty
 import com.example.invoke.R
 import com.example.invoke.constant.InvokeConstant
 import com.example.invoke.utils.LogUtils
+import com.example.invoke.utils.ViewUtil
 import kotlinx.android.synthetic.main.activity_sale.tv_result
 import kotlinx.android.synthetic.main.activity_void.*
 //import kotlinx.android.synthetic.main.activity_void.cb_signature
@@ -34,20 +35,15 @@ class QueryActivity : Activity(), View.OnClickListener {
     }
 
     private fun startTrans2() {
+        if (ViewUtil.checkTextIsEmpty(this, et_ori_business_order_no)) return
         val intent = Intent()
-        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_QUERY)
-        intent.putExtra("appId", InvokeConstant.APP_ID)
+        intent.putExtra("app_id", InvokeConstant.APP_ID)
         val jsonObject = JSONObject()
         try {
-            if (et_ori_business_order_no.text.toString().isNotEmpty()){
-                jsonObject.put("orig_merchant_order_no", et_ori_business_order_no.text.toString())
-            } else {
-                jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
-                Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
-            }
+            jsonObject.put("merchant_order_no", et_ori_business_order_no.text.toString())
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
             e.printStackTrace()

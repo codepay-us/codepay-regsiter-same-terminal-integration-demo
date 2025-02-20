@@ -34,7 +34,7 @@ class VoidActivity : Activity(), View.OnClickListener {
     private fun startTrans() {
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_PAY)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         val jsonObject = JSONObject()

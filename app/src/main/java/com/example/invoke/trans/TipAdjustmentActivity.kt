@@ -46,7 +46,7 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_TIP_ADJUSTMENT)
         val jsonObject = JSONObject()

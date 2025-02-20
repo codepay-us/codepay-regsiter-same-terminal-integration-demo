@@ -40,7 +40,7 @@ class BatchCloseActivity : Activity(), View.OnClickListener {
 
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
-        intent.putExtra("version", InvokeConstant.VERSIONV2)
+        intent.putExtra("version", InvokeConstant.VERSION2)
         intent.putExtra("app_id", InvokeConstant.APP_ID)
         intent.putExtra("topic", ECR_HUB_TOPIC_BATCH_CLOSE)
         startActivityForResult(intent, InvokeConstant.REQUEST_BALANCE_INQUIRY)
