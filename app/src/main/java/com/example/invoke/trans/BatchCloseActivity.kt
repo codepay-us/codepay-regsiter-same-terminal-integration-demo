@@ -1,5 +1,6 @@
 package com.example.invoke.trans
 
+import android.R.attr
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,12 +10,10 @@ import android.view.View
 import com.example.invoke.R
 import com.example.invoke.constant.InvokeConstant
 import com.example.invoke.constant.InvokeConstant.ECR_HUB_TOPIC_BATCH_CLOSE
-import com.example.invoke.utils.DateUtil
 import kotlinx.android.synthetic.main.activity_sale.et_amount
 import kotlinx.android.synthetic.main.activity_sale.tv_result
 import kotlinx.android.synthetic.main.amount_layout.btn_start_trans
-import org.json.JSONException
-import org.json.JSONObject
+
 
 class BatchCloseActivity : Activity(), View.OnClickListener {
 

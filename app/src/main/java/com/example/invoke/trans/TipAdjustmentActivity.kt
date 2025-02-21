@@ -10,10 +10,7 @@ import com.example.invoke.R
 import com.example.invoke.constant.InvokeConstant
 import com.example.invoke.utils.DateUtil
 import com.example.invoke.utils.ViewUtil
-import kotlinx.android.synthetic.main.activity_tip_adjustment.btn_start_trans
-import kotlinx.android.synthetic.main.activity_tip_adjustment.et_origin_business_no
-import kotlinx.android.synthetic.main.activity_tip_adjustment.et_tip_amount
-import kotlinx.android.synthetic.main.activity_tip_adjustment.tv_result_tip_adjustment
+import kotlinx.android.synthetic.main.activity_tip_adjustment.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -43,6 +40,7 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
 
 
     private fun startTrans2() {
+        if (ViewUtil.checkTextIsEmpty(this, et_origin_business_no)) return
         val intent = Intent()
         intent.action = InvokeConstant.CASHIER_ACTION
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
@@ -51,13 +49,13 @@ class TipAdjustmentActivity : Activity(), View.OnClickListener {
         intent.putExtra("topic", InvokeConstant.ECR_HUB_TOPIC_TIP_ADJUSTMENT)
         val jsonObject = JSONObject()
         try {
-            if (et_origin_business_no.text.toString().isNotEmpty()){
-                jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
-            } else {
-                jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
-                Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
-            }
-            jsonObject.put("merchant_order_no", DateUtil.getCurDateStr("yyyyMMddHHmmss"))
+//            if (et_origin_business_no.text.toString().isNotEmpty()){
+//                jsonObject.put("orig_merchant_order_no", et_origin_business_no.text.toString())
+//            } else {
+//                jsonObject.put("orig_merchant_order_no", sharedPreferences.getString("businessOrderNo","").toString())
+//                Log.e(TAG,"使用上一笔交易订单号 : ${sharedPreferences.getString("businessOrderNo","").toString()}")
+//            }
+            jsonObject.put("merchant_order_no", et_origin_business_no.text.toString())
             jsonObject.put("tip_adjustment_amount", ViewUtil.getAmount(et_tip_amount))
             intent.putExtra("biz_data", jsonObject.toString())
         } catch (e: JSONException) {
